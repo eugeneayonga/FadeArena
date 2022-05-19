@@ -1,0 +1,68 @@
+.appointments {
+  padding-top: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+
+.appointments .form-step-tracker {
+  display: inline-flex;
+  align-items: center;
+}
+
+.appointments .form-container {
+  /* margin: 0 2em 3em 2em; */
+  flex-basis: 100%;
+  padding: 1em 2em;
+  display: flex;
+  min-height: 100%;
+}
+
+.appointments form {
+  flex-grow: 1;
+  /* flex-basis: 100%; */
+  display: flex;
+  /* flex-direction: column; */
+  gap: 1em;
+}
+
+.appointments form > :first-child {
+  flex-basis: 100%;
+}
+
+.appointments .button-group {
+  display: flex;
+  gap: 0.5em;
+  align-self: flex-end;
+  margin-bottom: 2.5em;
+}
+
+.appointments .button-group button {
+  padding: 0.7rem 1rem 0.5rem 1.3rem;
+  font-size: 1.5rem;
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  letter-spacing: 0.2em;
+  border: 1px solid #1f1b1b;
+  border-radius: 2px;
+}
+
+.appointments button.next {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.appointments button.previous:hover:not(:disabled) {
+  background-color: #ccc;
+}
+
+.appointments button.next:hover {
+  background-color: var(--primary-color-dark);
+}
+/* .appointment .barber {
+  max-width: min-content;
+} */
+
+.appointments .barbers img {
+  max-width: 200px;
+}
