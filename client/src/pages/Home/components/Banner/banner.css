@@ -1,0 +1,102 @@
+.home .banner-container {
+  /* background-image: url(#banner-image); */
+  background-image: url(../../../../assets/images/banner-1-darker.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.home .banner-logo-text {
+  /* margin-left: 4rem; */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.home .banner-logo-text > * {
+}
+.home .banner-logo-text #scissors,
+.home .banner-logo-text #circle-stache {
+  cursor: pointer;
+  transition: transform 2s;
+  transform-origin: center;
+}
+
+.home .banner-logo-text #stache {
+  transition: 0.75s 2s;
+  transform-origin: bottom;
+}
+
+@keyframes rotate-circle-stache {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes rotate-scissors {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes stache-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(15deg);
+  }
+  70% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+.banner-container .welcome {
+  font-family: "Cookie", cursive;
+  color: #fff;
+  text-align: left;
+  max-width: 400px;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.banner-container .welcome-header {
+  font-size: 5rem;
+  margin: 0;
+}
+
+.banner-container .welcome-message {
+  font-size: 2rem;
+}
+
+.banner-container .welcome button {
+  display: block;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  font-size: 2rem;
+  font-family: "Moli", cursive;
+  font-weight: bold;
+  background-color: #39ac22;
+  color: #fff;
+  border: 2.5px solid #1f1b1b;
+  border-radius: 12px;
+  /* box-shadow: 5 5 2px rgba(0, 0, 0); */
+}

@@ -1,0 +1,28 @@
+.gallery-section {
+  display: flex;
+  color: #ddd;
+  flex-direction: column;
+  font-family: "Yanone Kaffeesatz";
+  align-items: center;
+  max-width: 900px;
+  background-color: #1f1b1b;
+  padding: 1em;
+}
+
+.gallery-section h2 {
+  font-size: 3rem;
+  margin: 0.5em;
+  letter-spacing: 4px;
+  text-decoration: underline;
+}
+
+.gallery-images {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1em;
+}
+
+.gallery-images img {
+  width: 250px;
+}

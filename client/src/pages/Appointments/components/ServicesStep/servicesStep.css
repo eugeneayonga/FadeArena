@@ -1,0 +1,67 @@
+.services-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.services-container h2 {
+  align-self: center;
+}
+
+.services {
+  padding: 1em 1em 1em 1.5em;
+}
+
+.service {
+  border-width: 0.75px 1.5px;
+  border-style: solid;
+  border-color: #1f1b1b;
+  display: flex;
+  align-items: center;
+}
+
+.service > * {
+  padding: 0.75em 1.5em;
+}
+
+.service:first-child {
+  border-top: 1.5px solid #1f1b1b;
+}
+
+.service:last-child {
+  border-bottom: 1.5px solid #1f1b1b;
+}
+
+.service input[type="checkbox"] {
+  display: none;
+}
+
+.service .button-wrapper {
+  flex-basis: 25%;
+  flex-shrink: 0;
+  /* border-left: 1px solid #1f1b1b; */
+  margin-left: auto;
+  text-align: end;
+}
+
+.service button {
+  padding: 0.25em 0.5em;
+  border-radius: 5px;
+  border-width: 1px;
+  background-color: rgb(0, 128, 0);
+  color: #ddd;
+  font-weight: bold;
+}
+
+.service button.checked {
+  background-color: rgb(122, 16, 16);
+  /* font-size: 0.2rem; */
+}
+
+.service button:hover {
+  background-color: rgba(0, 128, 0, 0.7);
+}
+
+.service button.checked:hover {
+  background-color: rgba(122, 16, 16, 0.7);
+}

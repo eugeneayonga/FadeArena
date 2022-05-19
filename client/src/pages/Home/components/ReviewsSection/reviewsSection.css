@@ -1,0 +1,31 @@
+section.reviews {
+  padding: 3em;
+  background-color: #1f1b1b;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  color: #ddd;
+  gap: 1em;
+}
+
+.carousel .arrow {
+  cursor: pointer;
+}
+
+.carousel img {
+  display: none;
+  width: 500px;
+  height: 500px;
+  margin-right: 0.35rem;
+  /* aspect-ratio: maintain; */
+}
+
+.carousel img.visible {
+  display: initial;
+}

@@ -1,0 +1,16 @@
+.date-time-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.date-time-container .date-picker {
+  margin-right: auto;
+  margin-left: 2em;
+}
+
+.date-time-container .time-picker {
+  align-self: flex-start;
+  margin-right: auto;
+  margin-top: 3em;
+}
