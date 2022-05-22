@@ -10,16 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_21_043657) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_22_060238) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "appointment_statuses", force: :cascade do |t|
-    t.boolean "open", default: true, null: false
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "appointment_date", null: false
@@ -27,7 +20,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_21_043657) do
     t.integer "barber_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "appointment_status_id", default: 1, null: false
+    t.integer "appointments_status_id", default: 1
+  end
+
+  create_table "appointments_statuses", force: :cascade do |t|
+    t.boolean "open", default: true, null: false
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "barber_services", force: :cascade do |t|
@@ -60,6 +60,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_21_043657) do
     t.string "last_name"
     t.string "phone_number"
     t.integer "address_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.integer "client_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders_products", force: :cascade do |t|
+    t.integer "order_id"
+    t.integer "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders_services", force: :cascade do |t|
+    t.integer "order_id"
+    t.integer "service_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

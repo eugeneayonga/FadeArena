@@ -1,3 +1,7 @@
 class BarberSerializer < ActiveModel::Serializer
-  attributes :id, :first_name, :last_name, :start_date, :wage, :station, :profile_img
+  attributes :id, :first_name, :last_name, :profile_img
+
+  has_many :appointments
+  has_many :clients
+  has_many :barber_services
 end
