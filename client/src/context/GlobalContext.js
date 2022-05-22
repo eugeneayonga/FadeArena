@@ -1,35 +1,34 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
-
-const BACKEND_URL = "http://localhost:3000";
 
 const GlobalContext = createContext();
 
+const initialState = { barbers: [], services: [], products: [] };
+
+const backendFetch = (path, config = {}) => {
+  return fetch(`http://localhost:3000${path}`, config);
+};
+
 const GlobalProvider = ({ children }) => {
-  const [resources, setResources] = useState({ barbers: [], services: [] });
-  // const [barbers, setBarbers] = useState([]);
-  // const [products, setProducts] = useState([]);
-  // const [services, setServices] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [resources, setResources] = useState(initialState);
 
   useEffect(() => {
-    const backend = axios.create({ baseURL: BACKEND_URL });
     const fetchResources = async () => {
-      const barbersData = backend.get("barbers").then(({ data }) => data);
-      const productsData = backend.get("products").then(({ data }) => data);
-      const servicesData = backend.get("services").then(({ data }) => data);
-      const [barbers, products, services] = await Promise.all([
-        barbersData,
-        productsData,
-        servicesData,
-      ]);
-      setResources({ barbers, products, services });
+      const barbers = (await (await backendFetch("/barbers")).json()) || [];
+      const services = (await (await backendFetch("/services")).json()) || [];
+      const products = (await (await backendFetch("/products")).json()) || [];
+      setResources({ barbers, services, products });
     };
     fetchResources();
   }, []);
 
+  currentUser && console.log(currentUser);
+
   return (
     resources && (
-      <GlobalContext.Provider value={resources}>
+      <GlobalContext.Provider
+        value={{ resources, currentUser, setCurrentUser }}
+      >
         {children}
       </GlobalContext.Provider>
     )

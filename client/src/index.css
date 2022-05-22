@@ -25,3 +25,8 @@ button {
 button:disabled {
   cursor: initial;
 }
+
+.error {
+  font-size: smaller;
+  color: red;
+}

@@ -47,7 +47,7 @@ const AVAILABLE_TIME_SLOTS = [
 ];
 
 const Appointments = () => {
-  const { services, barbers } = useGlobalContext();
+  const { services, barbers } = useGlobalContext().resources;
   const [currentStep, setCurrentStep] = useState(0);
   const formDataRef = useRef({
     barber: null,

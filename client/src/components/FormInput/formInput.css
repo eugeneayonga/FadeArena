@@ -1,0 +1,10 @@
+.form-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.required-star {
+  color: red;
+  font-size: small;
+}

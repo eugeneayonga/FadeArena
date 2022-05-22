@@ -9,10 +9,9 @@ const Header = () => {
       <HeaderLogoSVG />
       <span className="links">
         <a href="#">ABOUT</a>
-        <a href="#">SERVICES</a>
-        <a href="#">SHOP</a>
         <Link to="/appointments">BOOK APPOINTMENT</Link>
         <Link to="/login">LOGIN</Link>
+        <Link to="/signup">SIGNUP</Link>
         <ShoppingCartOutlinedIcon fontSize="large" className="cart-icon" />
       </span>
     </header>

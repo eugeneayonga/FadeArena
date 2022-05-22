@@ -37,6 +37,5 @@ header .links a {
 
 .cart-icon {
   color: #c42121;
-  /* height: 1.5rem; */
-  /* height: 1.5rem; */
+  cursor: not-allowed;
 }
