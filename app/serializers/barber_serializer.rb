@@ -3,5 +3,5 @@ class BarberSerializer < ActiveModel::Serializer
 
   has_many :appointments
   has_many :clients
-  has_many :barber_services
+  has_many :barbers_services
 end

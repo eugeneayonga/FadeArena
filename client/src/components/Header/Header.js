@@ -1,17 +1,24 @@
 import HeaderLogoSVG from "./HeaderLogoSVG";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const Header = () => {
-  const navigate = useNavigate();
+  const { currentUser } = useGlobalContext();
   return (
     <header>
       <HeaderLogoSVG />
       <span className="links">
-        <a href="#">ABOUT</a>
+        <a href="/about">ABOUT</a>
         <Link to="/appointments">BOOK APPOINTMENT</Link>
-        <Link to="/login">LOGIN</Link>
-        <Link to="/signup">SIGNUP</Link>
+        {!currentUser ? (
+          <>
+            <Link to="/login">LOGIN</Link>
+            <Link to="/signup">SIGNUP</Link>
+          </>
+        ) : (
+          <Link to="/logout">LOGOUT</Link>
+        )}
         <ShoppingCartOutlinedIcon fontSize="large" className="cart-icon" />
       </span>
     </header>
