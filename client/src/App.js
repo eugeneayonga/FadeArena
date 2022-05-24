@@ -2,11 +2,13 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Routes from "./Routes";
+import { useUser } from "./context/UserContext";
 
 function App() {
+  const { currentUser, logout } = useUser();
   return (
     <div className="App">
-      <Header />
+      <Header currentUser={currentUser} logout={logout} />
       <div className="content">
         <Routes />
       </div>

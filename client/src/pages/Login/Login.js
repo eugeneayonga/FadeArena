@@ -1,36 +1,43 @@
 import "./login.css";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 
-const loginUser = async (user) => {
-  const config = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  };
-  try {
-    const user = await (await fetch("/login", config)).json();
-    return user;
-  } catch (err) {
-    console.error(err);
-  }
-};
+// const loginUser = async (user) => {
+//   const config = {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(user),
+//   };
+//   try {
+//     const user = await (await fetch("/login", config)).json();
+//     return user;
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setCurrentUser, currentUser } = useGlobalContext();
+  const navigate = useNavigate();
+
+  const userActions = useUser();
+
+  useEffect(() => {
+    if (userActions.currentUser) navigate("/");
+  });
 
   const handleLogin = (e) => {
     e.preventDefault();
-    loginUser({ email, password }).then(setCurrentUser).catch(console.error);
+    userActions.login({ email, password });
+    // loginUser({ email, password }).then(setCurrentUser).catch(console.error);
   };
 
-  currentUser && console.log(currentUser);
+  // currentUser && console.log(currentUser);
 
   return (
     <div className="login-container">

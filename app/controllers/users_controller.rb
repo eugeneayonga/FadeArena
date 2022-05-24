@@ -2,10 +2,12 @@ class UsersController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :invalid_record
 
   def show
-    user = User.find(session[:user_id])
-    render json: user
-  rescue ActiveRecord::RecordNotFound
-    render json: {}, status: :not_found
+    user = User.find_by(id: session[:user_id])
+    if user.nil?
+      render json: { error: "Not authorized" }, status: :unauthorized
+    else
+      render json: user, status: :ok
+    end
   end
 
   def create

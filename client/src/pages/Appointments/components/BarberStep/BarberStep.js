@@ -14,19 +14,18 @@ const BARBER_IMAGES = [bImg1, bImg2, bImg3, bImg4, bImg5, bImg6];
 const BarberStep = ({ barbers, formDataRef }) => {
   const [barberId, setBarberId] = useState(formDataRef.current.barber);
 
-  const BarberCard = (b, i) => {
+  const BarberCard = ({ imgSrc, id, name }) => {
     const handleBarberClick = () => {
-      if (barberId === b.id) return setBarberId(null);
-      setBarberId(b.id);
+      if (barberId === id) return setBarberId(null);
+      setBarberId(id);
     };
     return (
       <div
-        key={b.id}
-        className={`barber ${barberId === b.id ? "selected" : ""}`}
+        className={`barber ${barberId === id ? "selected" : ""}`}
         onClick={handleBarberClick}
       >
-        <img src={BARBER_IMAGES[i]} alt="profile" />
-        <p className="name">{b.name}</p>
+        <img src={imgSrc} alt="profile" />
+        <p className="name">{name}</p>
       </div>
     );
   };
@@ -39,7 +38,21 @@ const BarberStep = ({ barbers, formDataRef }) => {
   return (
     <div className="barbers-container">
       <h2>Pick your barber:</h2>
-      <div className="barbers step-1">{barbers.map(BarberCard)}</div>
+      <div className="barbers step-1">
+        <BarberCard
+          imgSrc={defaultProfileImage}
+          id={0}
+          name="First available"
+        />
+        {barbers.map((barber, i) => (
+          <BarberCard
+            key={barber.id}
+            id={barber.id}
+            imgSrc={BARBER_IMAGES[i]}
+            name={barber.name}
+          />
+        ))}
+      </div>
     </div>
   );
 };

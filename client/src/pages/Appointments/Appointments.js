@@ -1,12 +1,15 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useGlobalContext } from "../../context/GlobalContext";
-import "./appointments.css";
 import BarberStep from "./components/BarberStep/BarberStep";
 import ServicesStep from "./components/ServicesStep/ServicesStep";
 import CustomerStep from "./components/CustomerStep/CustomerStep";
 import DateTimeStep from "./components/DateTimeStep/DateTimeStep";
 import ConfirmationStep from "./components/ConfirmationStep";
-import Axios from "axios";
+
+import "./appointments.css";
+import { Route, Routes } from "react-router-dom";
+import PaginatedForm from "../../components/PaginatedForm/PaginatedForm";
+import { useResources } from "../../context/ResourcesContext";
 
 // const FormStepTracker = () => {
 //   return (
@@ -47,7 +50,7 @@ const AVAILABLE_TIME_SLOTS = [
 ];
 
 const Appointments = () => {
-  const { services, barbers } = useGlobalContext().resources;
+  const { resources } = useResources();
   const [currentStep, setCurrentStep] = useState(0);
   const formDataRef = useRef({
     barber: null,
@@ -66,8 +69,8 @@ const Appointments = () => {
 
   const FormStep = () => {
     const steps = [
-      <BarberStep barbers={barbers} formDataRef={formDataRef} />,
-      <ServicesStep services={services} formDataRef={formDataRef} />,
+      <BarberStep barbers={resources.barbers} formDataRef={formDataRef} />,
+      <ServicesStep services={resources.services} formDataRef={formDataRef} />,
       <DateTimeStep
         availableTimeSlots={AVAILABLE_TIME_SLOTS}
         formDataRef={formDataRef}
@@ -75,8 +78,8 @@ const Appointments = () => {
       <CustomerStep formDataRef={formDataRef} />,
       <ConfirmationStep
         formDataRef={formDataRef}
-        barbers={barbers}
-        availableServices={services}
+        barbers={resources.barbers}
+        availableServices={resources.services}
       />,
     ];
 
@@ -100,11 +103,23 @@ const Appointments = () => {
     setCurrentStep(nextStep);
   };
 
+  console.log(resources);
+
   return (
     <div className="appointments">
-      {services && barbers && (
+      {resources && (
         <div className="form-container">
-          <form onSubmit={handleNextButton}>
+          <PaginatedForm formDataRef={formDataRef}>
+            <BarberStep barbers={resources.barbers} />
+            <ServicesStep services={resources.services} />
+            <DateTimeStep availableTimeSlots={AVAILABLE_TIME_SLOTS} />
+            <CustomerStep />
+            <ConfirmationStep
+              barbers={resources.barbers}
+              availableServices={resources.services}
+            />
+          </PaginatedForm>
+          {/* <form onSubmit={handleNextButton}>
             <FormStep />
             <div className="button-group">
               <button
@@ -119,7 +134,7 @@ const Appointments = () => {
                 {currentStep === 4 ? "SUBMIT" : "NEXT"}
               </button>
             </div>
-          </form>
+          </form> */}
         </div>
       )}
     </div>
