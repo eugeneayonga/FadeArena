@@ -1,5 +1,8 @@
-import { useRef, useState } from "react";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useRef, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useResources } from "../../context/ResourcesContext";
+import PaginatedForm from "../../components/PaginatedForm/PaginatedForm";
+
 import BarberStep from "./components/BarberStep/BarberStep";
 import ServicesStep from "./components/ServicesStep/ServicesStep";
 import CustomerStep from "./components/CustomerStep/CustomerStep";
@@ -7,28 +10,6 @@ import DateTimeStep from "./components/DateTimeStep/DateTimeStep";
 import ConfirmationStep from "./components/ConfirmationStep";
 
 import "./appointments.css";
-import { Route, Routes } from "react-router-dom";
-import PaginatedForm from "../../components/PaginatedForm/PaginatedForm";
-import { useResources } from "../../context/ResourcesContext";
-
-// const FormStepTracker = () => {
-//   return (
-//     <div className="form-step-tracker">
-//       <span>
-//         <p>Barber</p>
-//       </span>
-//       <ArrowRightAltIcon />
-//       <span>
-//         <p>Services</p>
-//       </span>
-//       <ArrowRightAltIcon />
-//     </div>
-//   );
-// };
-
-const SERVICE_DURATION = 30;
-const OPEN_TIME = 1000;
-const CLOSE_TIME = 1800;
 
 const AVAILABLE_TIME_SLOTS = [
   "10:00 AM",
@@ -51,65 +32,53 @@ const AVAILABLE_TIME_SLOTS = [
 
 const Appointments = () => {
   const { resources } = useResources();
-  const [currentStep, setCurrentStep] = useState(0);
-  const formDataRef = useRef({
-    barber: null,
-    services: [],
-    dateTime: {
-      date: new Date(),
-      time: null,
-    },
-    customer: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-    },
-  });
+  const formData = useRef({});
 
-  const FormStep = () => {
-    const steps = [
-      <BarberStep barbers={resources.barbers} formDataRef={formDataRef} />,
-      <ServicesStep services={resources.services} formDataRef={formDataRef} />,
-      <DateTimeStep
-        availableTimeSlots={AVAILABLE_TIME_SLOTS}
-        formDataRef={formDataRef}
-      />,
-      <CustomerStep formDataRef={formDataRef} />,
-      <ConfirmationStep
-        formDataRef={formDataRef}
-        barbers={resources.barbers}
-        availableServices={resources.services}
-      />,
-    ];
-
-    return <>{steps[currentStep]}</>;
-  };
-
-  const handleNewAppointment = (formData) => {
-    const formDataCopy = { ...formData };
+  const handleSubmit = () => {
+    const formDataCopy = { ...formData.current };
     const { date, time } = formDataCopy.dateTime;
     formDataCopy.dateTime = new Date(`${date} ${time}`);
     console.log(`formDataCopy`, formDataCopy);
-    // Axios.post("http://localhost:3000/appointments/create", { data: formData });
+    fetch("/appointments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formDataCopy),
+    })
+      .then(console.log)
+      .catch(console.error);
   };
-
-  const handleNextButton = (e) => {
-    e.preventDefault();
-    if (currentStep === 4) {
-      return handleNewAppointment(formDataRef.current);
-    }
-    const nextStep = currentStep + 1;
-    setCurrentStep(nextStep);
-  };
-
-  console.log(resources);
 
   return (
     <div className="appointments">
       {resources && (
         <div className="form-container">
-          <PaginatedForm formDataRef={formDataRef}>
+          <PaginatedForm
+            className="appointment-form"
+            id="paginatedForm"
+            submit={handleSubmit}
+          >
+            <CustomerStep formData={formData} />
+            <BarberStep barbers={resources.barbers} formData={formData} />
+            <ServicesStep services={resources.services} formData={formData} />
+            <DateTimeStep
+              availableTimeSlots={AVAILABLE_TIME_SLOTS}
+              formData={formData}
+            />
+            <ConfirmationStep
+              barbers={resources.barbers}
+              availableServices={resources.services}
+              formData={formData}
+            />
+          </PaginatedForm>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Appointments;
+
+/*
             <BarberStep barbers={resources.barbers} />
             <ServicesStep services={resources.services} />
             <DateTimeStep availableTimeSlots={AVAILABLE_TIME_SLOTS} />
@@ -118,27 +87,4 @@ const Appointments = () => {
               barbers={resources.barbers}
               availableServices={resources.services}
             />
-          </PaginatedForm>
-          {/* <form onSubmit={handleNextButton}>
-            <FormStep />
-            <div className="button-group">
-              <button
-                disabled={currentStep === 0}
-                type="button"
-                className="previous"
-                onClick={() => setCurrentStep(currentStep - 1)}
-              >
-                BACK
-              </button>
-              <button type="button" className="next" onClick={handleNextButton}>
-                {currentStep === 4 ? "SUBMIT" : "NEXT"}
-              </button>
-            </div>
-          </form> */}
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default Appointments;
+*/

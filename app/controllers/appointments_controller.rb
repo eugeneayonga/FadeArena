@@ -3,37 +3,24 @@ class AppointmentsController < ApplicationController
 
   def create
     client = get_client()
-    byebug
+    appointment = Appointment.create!(barber_id: params[:barber_id], client_id: client.id, appointment_date: params[:appointment_date])
+    render json: { client: client, appointment: appointment }, status: :created
   end
 
   private
 
   def get_client
-    if session[:user_id]
-      return User.find(session[:user_id]).client
+    return User.find(session[:user_id]).client if session[:user_id]
+    client = Client.find_by(phone_number: params[:phone_number])
+    if client.nil?
+      client = Client.create! first_name: params[:first_name], last_name: params[:last_name], phone_number: params[:phone_number]
     else
-      client = Client.find_by(phone_number: params[:phone_number])
-      if client.nil?
-        client = Client.create! first_name: params[:first_name], last_name: params[:last_name], phone_number: params[:phone_number]
-      else
-        client.update(first_name: params[:first_name], last_name: params[:last_name])
-      end
-      return client
+      client.update(first_name: params[:first_name], last_name: params[:last_name])
     end
+    client
   end
 
   def record_not_found(err)
     render json: { errors: err.full_messages }, status: :not_found
   end
 end
-
-# unused route methods:
-# def index
-#   appointments = Appointment.all
-#   render json: appointments, status: :ok
-# end
-
-# def show
-#   appointment = Appointment.find(params[:id])
-#   render json: appointment, status: :ok
-# end

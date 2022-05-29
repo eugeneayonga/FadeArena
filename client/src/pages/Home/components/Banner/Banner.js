@@ -10,7 +10,7 @@ const Banner = () => {
       <div className="welcome">
         <p className="welcome-header">Welcome!</p>
         <p className="welcome-message">
-          Click below to book your appointment today!
+          Click below to book your next appointment!
         </p>
         <button
           className="book-appointment"

@@ -1,6 +1,19 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { camelCaseToSnakeCase } from "../helpers/stringHelpers";
 
 const UserContext = createContext();
+
+// const formatUserForBackend = (user) => {
+//   const formattedEntries = Object.entries(user).map(([key, val]) => {
+//     const formattedKey = camelCaseToSnakeCase(key);
+//     return [formattedKey, val];
+//   });
+//   const formattedUser = Object.fromEntries(formattedEntries);
+
+//   console.log("formattedUser", formattedUser);
+//   return formattedUser;
+// };
 
 const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -14,15 +27,10 @@ const UserProvider = ({ children }) => {
       body: JSON.stringify(data),
     })
       .then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText);
-        }
+        if (!res.ok) throw new Error(res.statusText);
         return res.json();
       })
-      .then((user) => {
-        console.log("user", user);
-        setCurrentUser(user);
-      })
+      .then(setCurrentUser)
       .catch(setUserError);
   }
 
@@ -35,11 +43,31 @@ const UserProvider = ({ children }) => {
       .catch(console.error);
   }
 
-  const userActions = {
-    userError,
-    currentUser,
+  function signup(user) {
+    fetch("http://localhost:3000/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => {
+        if (!res.ok) return new Error(res.statusText);
+        return res.json();
+      })
+      .then(setCurrentUser)
+      .catch(console.error);
+  }
+
+  const actions = {
     login,
     logout,
+    signup,
+  };
+
+  const state = {
+    userError,
+    currentUser,
   };
 
   useEffect(() => {
@@ -50,14 +78,16 @@ const UserProvider = ({ children }) => {
         const user = await res.json();
         setCurrentUser(user);
       } catch (err) {
-        console.error(err);
+        console.warn(err);
       }
     }
-    checkSessionForUser();
-  }, []);
+    if (!currentUser) checkSessionForUser();
+  }, [currentUser]);
 
   return (
-    <UserContext.Provider value={userActions}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ state, actions }}>
+      {children}
+    </UserContext.Provider>
   );
 };
 

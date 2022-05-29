@@ -1,11 +1,16 @@
 import "./App.css";
+import { useMemo } from "react";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Routes from "./Routes";
 import { useUser } from "./context/UserContext";
 
 function App() {
-  const { currentUser, logout } = useUser();
+  const {
+    state: { currentUser },
+    actions: { logout },
+  } = useUser();
+
   return (
     <div className="App">
       <Header currentUser={currentUser} logout={logout} />

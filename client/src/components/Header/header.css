@@ -3,6 +3,7 @@ header {
   display: flex;
   align-items: center;
   background-color: #1f1b1b;
+  color: #ddd;
 }
 
 .header-logo {
@@ -18,7 +19,13 @@ header {
 }
 
 header .book-appointment {
+  border: 1px solid #888;
   margin: 0 auto;
+  padding: 0.5em 0.75em 0.3em 0.75em;
+  background-color: var(--primary-color);
+  color: #ccc;
+  border-radius: 5px;
+  min-width: max-content;
 }
 
 header .login-logout {
@@ -26,6 +33,7 @@ header .login-logout {
   gap: 2em;
   display: inline-flex;
   align-items: center;
+  margin-right: 5em;
 }
 
 header a {

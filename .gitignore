@@ -31,3 +31,4 @@
 
 # Miscellaneous ignored files.
 .byebug_history
+.dev

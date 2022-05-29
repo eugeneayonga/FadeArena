@@ -1,19 +1,27 @@
 import { v4 as uuid } from "uuid";
+import FormStep from "../../../components/FormStep/FormStep";
 
-const ConfirmationStep = ({ formDataRef, barbers, availableServices }) => {
-  const { barber, services, dateTime, customer } = formDataRef.current;
+const ConfirmationStep = ({ formData, barbers, availableServices }) => {
+  const {
+    barber_id,
+    services = [],
+    dateTime = {},
+    first_name,
+    last_name,
+    phone_number,
+  } = formData.current;
 
-  const barberName = barbers.find((b) => b.id === barber)?.name || "";
+  const barberName = barbers.find((b) => b.id === barber_id)?.name || "";
 
   const servicesDetails = services.map((s) => {
     const service = availableServices.find((srvc) => srvc.id === s);
     return `${service.name} - $${service.price}`;
   });
 
-  console.log(`formData`, formDataRef.current);
+  console.log(`formData`, formData.current);
 
   return (
-    <div className="confirmation step 4">
+    <FormStep className="confirmation step 4">
       <h4>Barber: {barberName}</h4>
       <h4>Services: </h4>
       <ul>
@@ -26,12 +34,11 @@ const ConfirmationStep = ({ formDataRef, barbers, availableServices }) => {
       </h4>
       <h4>Customer:</h4>
       <ul>
-        <li>First Name: {customer.firstName}</li>
-        <li>Last Name: {customer.lastName}</li>
-        <li>Email: {customer.email}</li>
-        <li>Phone Number: {customer.phoneNumber}</li>
+        <li>First Name: {first_name}</li>
+        <li>Last Name: {last_name}</li>
+        <li>Phone Number: {phone_number}</li>
       </ul>
-    </div>
+    </FormStep>
   );
 };
 

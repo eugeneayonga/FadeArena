@@ -1,13 +1,13 @@
 import HeaderLogoSVG from "./HeaderLogoSVG";
-import { Link } from "react-router-dom";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = ({ currentUser, logout }) => {
+  const location = useLocation();
+
   const handleLogout = (e) => {
     e.preventDefault();
     logout();
   };
-  currentUser && console.log(currentUser);
   return (
     <header>
       <HeaderLogoSVG />
@@ -17,15 +17,22 @@ const Header = ({ currentUser, logout }) => {
       <span className="login-logout">
         {currentUser === null ? (
           <>
-            <Link to="/login">LOGIN</Link>
+            <Link to="/login" state={{ redirectURL: location.pathname }}>
+              LOGIN
+            </Link>
             <Link to="/signup">SIGNUP</Link>
           </>
         ) : (
           <>
+            <p>
+              Welcome,{" "}
+              <Link className="user-link" to={`/user/${currentUser.id}`}>
+                {currentUser.client.first_name}
+              </Link>
+            </p>
             <Link to="/logout" onClick={handleLogout}>
               LOGOUT
             </Link>
-            <p>Hello, </p>
           </>
         )}
       </span>

@@ -8,16 +8,22 @@ import bImg6 from "../../../../assets/images/barber-images/barber6.png";
 
 import "./barberStep.css";
 import { useEffect, useState } from "react";
+import FormStep from "../../../../components/FormStep/FormStep";
 
 const BARBER_IMAGES = [bImg1, bImg2, bImg3, bImg4, bImg5, bImg6];
 
-const BarberStep = ({ barbers, formDataRef }) => {
-  const [barberId, setBarberId] = useState(formDataRef.current.barber);
+const BarberStep = ({ barbers, formData, ...otherProps }) => {
+  const [barberId, setBarberId] = useState(formData.current.barber_id || 0);
 
   const BarberCard = ({ imgSrc, id, name }) => {
     const handleBarberClick = () => {
-      if (barberId === id) return setBarberId(null);
+      if (barberId === id) {
+        setBarberId(null);
+        formData.current.barber_id = null;
+        return;
+      }
       setBarberId(id);
+      formData.current.barber_id = id;
     };
     return (
       <div
@@ -30,14 +36,10 @@ const BarberStep = ({ barbers, formDataRef }) => {
     );
   };
 
-  useEffect(() => {
-    formDataRef.current.barber = barberId;
-    console.log(`formData`, formDataRef.current);
-  }, [barberId, formDataRef]);
-
   return (
-    <div className="barbers-container">
-      <h2>Pick your barber:</h2>
+    <FormStep className="barbers-container" {...otherProps}>
+      <h2 className="step-title">Barbers</h2>
+      <h3>Pick your barber:</h3>
       <div className="barbers step-1">
         <BarberCard
           imgSrc={defaultProfileImage}
@@ -53,7 +55,7 @@ const BarberStep = ({ barbers, formDataRef }) => {
           />
         ))}
       </div>
-    </div>
+    </FormStep>
   );
 };
 

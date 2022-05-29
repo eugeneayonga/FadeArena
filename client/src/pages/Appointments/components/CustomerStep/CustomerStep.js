@@ -1,73 +1,42 @@
-import { faker } from "@faker-js/faker";
-import { useEffect, useState } from "react";
+import FormStep from "../../../../components/FormStep/FormStep";
+import TextField from "../../../../components/TextField/TextField";
+import { Link, useLocation } from "react-router-dom";
 
-const CustomerStep = ({ formDataRef }) => {
-  const [firstName, setFirstName] = useState(
-    formDataRef.current.customer.firstName
-  );
-  const [lastName, setLastName] = useState(
-    formDataRef.current.customer.lastName
-  );
-  const [email, setEmail] = useState(formDataRef.current.customer.email);
-  const [phoneNumber, setPhoneNumber] = useState(
-    formDataRef.current.customer.phoneNumber
-  );
-
-  useEffect(() => {
-    formDataRef.current.customer = { firstName, lastName, email, phoneNumber };
-  });
+const CustomerStep = ({ formData }) => {
+  const location = useLocation();
 
   return (
-    <div className="customer step-3">
-      <div>
-        <label htmlFor="firstName">First Name:</label>
-        <input
-          type="text"
-          name="firstName"
-          id="firstName"
-          className="first-name"
-          placeholder={faker.name.firstName()}
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+    <FormStep className="form-step customer-info">
+      <div className="row-1">
+        <TextField
+          formData={formData}
+          id="first_name"
+          label="First Name"
+          required
+        />
+        <TextField formData={formData} id="last_name" label="Last Name" />
+      </div>
+      <div className="row-2">
+        <TextField
+          formData={formData}
+          id="phone_number"
+          label="Phone Number"
+          required
         />
       </div>
-      <div>
-        <label htmlFor="lastName">Last Name:</label>
-        <input
-          type="text"
-          name="lastName"
-          id="lastName"
-          className="last-name"
-          placeholder="Doe"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          className="email"
-          placeholder="example@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="phoneNumber">Phone Number:</label>
-        <input
-          type="tel"
-          name="phoneNumber"
-          id="phoneNumber"
-          className="phone-number"
-          placeholder="(320) 555-5555"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
-      </div>
-    </div>
+      <h4>
+        <Link to="/signup" state={{ redirectURL: location.pathname }}>
+          Signup
+        </Link>{" "}
+        to make booking an appointment even faster!
+      </h4>
+      <h4>
+        Already have an account?{" "}
+        <Link to="/login" state={{ redirectURL: location.pathname }}>
+          Login!
+        </Link>
+      </h4>
+    </FormStep>
   );
 };
 

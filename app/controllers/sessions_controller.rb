@@ -1,16 +1,12 @@
 class SessionsController < ApplicationController
+  # /login
   def create
-    # /login
     user = User.find_by(email: params[:email])
     if user.nil?
       render json: { error: "Incorrect email address and/or password." }, status: :unprocessable_entity
-    elsif user.authenticate(params[:password])
+    else user.authenticate(params[:password])
       session[:user_id] = user.id
-      # byebug
-      render json: user, status: :created
-    else
-      render json: { error: "Incorrect email address and/or password." }, status: :unprocessable_entity
-    end
+      render json: user, status: :created     end
   end
 
   # /logout
