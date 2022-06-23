@@ -14,7 +14,6 @@ class UsersController < ApplicationController
 
   # /signup
   def create
-    byebug
     client = Client.find_by(phone_number: params[:phone_number]) || Client.create!(client_params)
     return render json: { message: "User already exists!" }, status: :ok unless client.user.nil?
     user = client.create_user!(user_params(client.id))

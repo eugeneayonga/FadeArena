@@ -1,5 +1,6 @@
-import { useRef, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 import { useResources } from "../../context/ResourcesContext";
 import PaginatedForm from "../../components/PaginatedForm/PaginatedForm";
 
@@ -33,19 +34,33 @@ const AVAILABLE_TIME_SLOTS = [
 const Appointments = () => {
   const { resources } = useResources();
   const formData = useRef({});
+  const { currentUser } = useUser().state;
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     const formDataCopy = { ...formData.current };
     const { date, time } = formDataCopy.dateTime;
-    formDataCopy.dateTime = new Date(`${date} ${time}`);
+    formDataCopy.appointment_date = new Date(`${date} ${time}`);
     console.log(`formDataCopy`, formDataCopy);
     fetch("/appointments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formDataCopy),
     })
-      .then(console.log)
+      .then((res) =>
+        res.ok ? navigate("/") : new Error("Couldn't book appointment")
+      )
       .catch(console.error);
+  };
+
+  const addCurrentUserToFormData = () => {
+    const { first_name, last_name, phone_number } = currentUser.client;
+    formData.current = {
+      ...formData.current,
+      first_name,
+      last_name,
+      phone_number,
+    };
   };
 
   return (
@@ -55,9 +70,14 @@ const Appointments = () => {
           <PaginatedForm
             className="appointment-form"
             id="paginatedForm"
+            firstStep={currentUser ? 2 : 1}
             submit={handleSubmit}
           >
-            <CustomerStep formData={formData} />
+            {currentUser ? (
+              addCurrentUserToFormData()
+            ) : (
+              <CustomerStep formData={formData} />
+            )}
             <BarberStep barbers={resources.barbers} formData={formData} />
             <ServicesStep services={resources.services} formData={formData} />
             <DateTimeStep

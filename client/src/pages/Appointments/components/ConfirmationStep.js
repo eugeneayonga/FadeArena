@@ -14,7 +14,7 @@ const ConfirmationStep = ({ formData, barbers, availableServices }) => {
   const barberName = barbers.find((b) => b.id === barber_id)?.name || "";
 
   const servicesDetails = services.map((s) => {
-    const service = availableServices.find((srvc) => srvc.id === s);
+    const service = availableServices.find((as) => as.id === s);
     return `${service.name} - $${service.price}`;
   });
 

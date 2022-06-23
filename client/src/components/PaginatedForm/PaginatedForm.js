@@ -14,11 +14,12 @@ const PaginatedForm = ({
   children,
   id = "paginatedForm",
   submit,
+  firstStep = 1,
   ...otherProps
 }) => {
-  const [stepCount, setStepCount] = useState(1);
+  const [stepCount, setStepCount] = useState(firstStep);
 
-  const isFirstStep = stepCount === 1;
+  const isFirstStep = stepCount === firstStep;
 
   const isLastStep = stepCount === React.Children.count(children);
 
