@@ -38,8 +38,6 @@ const ResourcesProvider = ({ children }) => {
     fetchStartupResources();
   }, []);
 
-  console.log(resources);
-
   return (
     <ResourcesContext.Provider
       value={{ resources, dispatch, actionsList: [...Object.keys(actions)] }}

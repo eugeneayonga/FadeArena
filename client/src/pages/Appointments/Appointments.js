@@ -40,7 +40,8 @@ const Appointments = () => {
   const handleSubmit = () => {
     const formDataCopy = { ...formData.current };
     const { date, time } = formDataCopy.dateTime;
-    formDataCopy.appointment_date = new Date(`${date} ${time}`);
+    const dateTime = new Date(`${date} ${time}`);
+    formDataCopy.appointment_date = dateTime;
     console.log(`formDataCopy`, formDataCopy);
     fetch("/appointments", {
       method: "POST",
@@ -48,7 +49,9 @@ const Appointments = () => {
       body: JSON.stringify(formDataCopy),
     })
       .then((res) =>
-        res.ok ? navigate("/") : new Error("Couldn't book appointment")
+        res.ok
+          ? navigate("/", { state: { appointment_date: dateTime } })
+          : new Error("Couldn't book appointment")
       )
       .catch(console.error);
   };

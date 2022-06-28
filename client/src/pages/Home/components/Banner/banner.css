@@ -67,7 +67,7 @@
   }
 }
 
-.banner-container .welcome {
+.banner-container .message-container {
   font-family: "Cookie", cursive;
   color: #fff;
   text-align: left;
@@ -76,15 +76,12 @@
   display: flex;
   flex-direction: column;
   gap: 1.5em;
+  font-size: 2rem;
 }
 
 .banner-container .welcome-header {
   font-size: 5rem;
   margin: 0;
-}
-
-.banner-container .welcome-message {
-  font-size: 2rem;
 }
 
 .banner-container .welcome button {

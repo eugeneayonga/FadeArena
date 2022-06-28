@@ -9,7 +9,7 @@ import FormStep from "../../../../components/FormStep/FormStep";
 
 const DateTimeStep = ({ availableTimeSlots, formData }) => {
   const [date, setDate] = useState(formData.current.dateTime?.date || "");
-  const [time, setTime] = useState(formData.current.dateTime?.time || null);
+  const [time, setTime] = useState(formData.current.dateTime?.time || "");
 
   const handleDateChange = (e) => {
     setDate(e.target.value);
@@ -30,10 +30,10 @@ const DateTimeStep = ({ availableTimeSlots, formData }) => {
       <input type="date" value={date} onChange={handleDateChange} />
       <select name="hour" id="hour" value={time} onChange={handleTimeChange}>
         <option value={null} label="Choose a time"></option>
-        {availableTimeSlots.map((ts) => {
+        {availableTimeSlots.map((slot) => {
           return (
-            <option key={ts} value={ts}>
-              {ts}
+            <option key={slot} value={slot}>
+              {slot}
             </option>
           );
         })}

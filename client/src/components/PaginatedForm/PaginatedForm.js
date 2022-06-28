@@ -40,10 +40,6 @@ const PaginatedForm = ({
     return children;
   };
 
-  console.log("Step count", stepCount);
-  console.log("Child count", React.Children.count(children));
-  console.log("Last step?", isLastStep);
-
   return (
     <PaginatedFormContext.Provider value={{ stepCount }}>
       <form id={id} {...otherProps}>
