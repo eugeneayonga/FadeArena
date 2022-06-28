@@ -1,24 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**This README is not complete. This is an oversight.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version - ruby 2.7.4
 
-* System dependencies
+* System dependencies - sql, node, npx, rails 
 
-* Configuration
-
-* Database creation
+* Database creation - `rails db:migrate db:seed`
 
 * Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
