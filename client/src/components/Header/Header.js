@@ -26,7 +26,7 @@ const Header = ({ currentUser, logout }) => {
           <>
             <p>
               Welcome,{" "}
-              <Link className="user-link" to={`/user/${currentUser.id}`}>
+              <Link className="user-link" to={`/user`}>
                 {currentUser.client.first_name}
               </Link>
             </p>

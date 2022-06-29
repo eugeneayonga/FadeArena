@@ -3,7 +3,7 @@ import Home from "./pages/Home/Home";
 import Appointments from "./pages/Appointments/Appointments";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
-import UserProfile from "./pages/User/User";
+import UserProfile from "./pages/UserProfile/UserProfile";
 
 const AppRoutes = () => {
   return (

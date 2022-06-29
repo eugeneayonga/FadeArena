@@ -23,6 +23,12 @@ class UsersController < ApplicationController
     render json: { error: err.message }, status: :unprocessable_entity
   end
 
+  def user_appointments
+    user = User.find(session[:user_id])
+    appointments = user.client.appointments
+    render json: appointments, status: :ok
+  end
+
   protected
 
   def user_params(client_id)
